@@ -1,0 +1,4 @@
+@section('errors')
+Hallofasdfasdf
+
+@endsection

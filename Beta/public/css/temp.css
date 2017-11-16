@@ -1,0 +1,47 @@
+/* Profile skills */
+.mo-skill__bar {
+ position: absolute;
+}
+
+.mo-skill__bar--top {
+ z-index: 1;
+}
+
+.mo-skill__barContainer {
+    float: left;
+    width: 100%;
+    margin-top: 5px;
+    position: relative;
+}
+
+.mo-skill__entry {
+    max-width: 100px;
+}
+
+.co-actionbar__values {
+	padding: 7px 5px;
+}
+
+.co-actionbar__values {
+    padding: 8px 5px;
+    border-radius: 3px;
+}
+
+.co-actionbar__button--right {
+    position: absolute;
+    width: 79px;
+    top: 7px;
+    right: 12px;
+}
+
+.mo-button {
+    padding: 10px 10px;
+}
+
+/* Assignment button disabled */
+.assignment-start-button-disabled
+{
+	pointer-events: none;
+	cursor: default;
+	background: #DDDDDD;
+}
