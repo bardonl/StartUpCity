@@ -11,17 +11,7 @@
             <div class='co-panel'>
                 <img class='co-panel__image--top img-responsive' src='{{asset('css/gfx/assignments/' . $i . '.png')}}' alt=''>
                 <span class='mo-label mo-label__card--right'>{{$assignment->skill_type[0]->title}}</span>
-                @if ($assignment->assignment_type_id === 2)
-                    <div class="mo-caption mo-caption--card">
-                        <!--
-                        <div class="mo-caption__image mo-caption__image--left">
-                          <img src="http://placehold.it/650x650" width="40" height="40" class="mo-profile__image--circle" alt="">
-                        </div>
-                        -->
-                        <span class="mo-caption__content">Via jouw advertenties</span>
-                        <span class="mo-label mo-label__caption--{{strtolower($assignment->entry_level[0]->title)}}">{{$assignment->entry_level[0]->title}}</span>
-                    </div>
-                @endif
+
                 <div class='co-panel__content'>
                     <span class='font__focus'>{{$assignment->converted_duration}} </span>{{$assignment->title}}
                 </div>

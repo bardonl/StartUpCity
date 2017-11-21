@@ -9,7 +9,17 @@ class AssignmentsController extends Controller
     
     public function show()
     {
-        $assignments = Assignments::all()->where('assignment_type_id', 1);
+        
+        if ( $_SERVER['REQUEST_URI'] === '/learning') {
+            $assignmentTypeId = 1;
+        } elseif ( $_SERVER['REQUEST_URI'] === '/working') {
+            $assignmentTypeId = 2;
+        } else {
+            echo "Whoops";
+            die;
+        }
+        
+        $assignments = Assignments::all()->where('assignment_type_id', $assignmentTypeId);
         
         $userAssignmentData = DB::table('user_assignments')->where([
             ['user_id', '=', auth()->user()->id],
@@ -28,7 +38,7 @@ class AssignmentsController extends Controller
         
         $this->convertTime($assignments);
         
-        return view('/learning')->with(compact('assignments'));
+        return view($_SERVER['REQUEST_URI'])->with(compact('assignments'));
     }
     
     public function convertTime($assignments)

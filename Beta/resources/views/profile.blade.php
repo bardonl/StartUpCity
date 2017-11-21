@@ -17,7 +17,7 @@
         <div class="co-panel">
             <div class="co-panel__heading--sub">Status</div>
             <div class="co-panel__content--top">
-                <span class="mo-timer__status--big"><!--Werken--></span>
+                <span class="mo-timer__status--big">?<!--Werken--></span>
                 <!--<span class="mo-timer__time">01 : 04 : 24</span>-->
             </div>
         </div>

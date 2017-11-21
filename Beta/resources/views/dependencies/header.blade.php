@@ -1,6 +1,8 @@
 <?php
 
     $assignmentData = \App\Http\Controllers\UserAssignmentsController::getActiveAssignment();
+    \App\Http\Controllers\UserAssignmentsController::updateUserAssignment($assignmentData);
+
 ?>
 
 <h1 class="co-menubar__title">@yield('title')</h1>
@@ -16,6 +18,13 @@
 </div>
 <div class="mo-timer pull-right">
 
+    {{--is there a assignment active for the user?--}}
+        {{--if there is check the date and time--}}
+        {{--Has the time passed already?--}}
+        {{--if so, transfer the peanuts to the user together with the XP--}}
+        {{--Set assignment active to 0--}}
+    {{--Step 4 When assignment is due transfer the peanuts to the user--}}
+
     {{--@todo get working status from the DB with other data that it should come with.--}}
     <span id="mo-timer__status" class="mo-timer__status">[=working_status]</span>
 
@@ -23,4 +32,5 @@
     <input id="assignment-start-time" type="hidden" value="@if (isset($assignmentData[0])){{$assignmentData[0]->start_time}}@else{{0}}@endif" />
     <input id="assignment-duration" type="hidden" value="@if (isset($assignmentData[0])){{$assignmentData[0]->duration}}@else{{0}}@endif" />
     <input id="assignment-peanuts" type="hidden" value="@if (isset($assignmentData[0])){{$assignmentData[0]->peanuts}}@else{{0}}@endif" />
+    <input id="assignment-status" type="hidden" value="@if (isset($assignmentData[0])){{$assignmentData[0]->assignment_type_id}}@else{{0}}@endif" />
 </div>

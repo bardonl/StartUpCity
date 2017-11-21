@@ -55,6 +55,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('glogin', array('as'=>'glogin', 'uses'=>'UserController@googleLogin'));
     
     Route::get('/learning/start-assignment/{id}', 'UserAssignmentsController@create');
+    
+    Route::get('/working', 'AssignmentsController@show');
 });
 
 

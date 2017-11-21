@@ -21,7 +21,7 @@ class CreateUserAssignmentsTable extends Migration
         
             $table->boolean('active')->default(1);
             
-            $table->dateTime('start_time');
+            $table->integer('start_time');
             
             $table->timestamps();
         });
@@ -34,6 +34,6 @@ class CreateUserAssignmentsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('user_assignments');
     }
 }
