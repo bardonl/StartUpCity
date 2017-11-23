@@ -18,14 +18,6 @@
 </div>
 <div class="mo-timer pull-right">
 
-    {{--is there a assignment active for the user?--}}
-        {{--if there is check the date and time--}}
-        {{--Has the time passed already?--}}
-        {{--if so, transfer the peanuts to the user together with the XP--}}
-        {{--Set assignment active to 0--}}
-    {{--Step 4 When assignment is due transfer the peanuts to the user--}}
-
-    {{--@todo get working status from the DB with other data that it should come with.--}}
     <span id="mo-timer__status" class="mo-timer__status">[=working_status]</span>
 
     <span id="mo-timer__time" class="mo-timer__time">[=assignment_time]</span>

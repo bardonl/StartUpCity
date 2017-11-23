@@ -15,9 +15,9 @@ class CheckUrlJob
     /**
      * @return array/boolean
      */
-    public function checkProfileUrl()
+    public static function checkUrl()
     {
-        $urlItems = $this->explodeUrl();
+        $urlItems = explode('/', $_SERVER['REQUEST_URI']);
         $id = end($urlItems);
         
         if (is_numeric($id)) {
@@ -27,10 +27,5 @@ class CheckUrlJob
             
             return auth()->user();
         }
-    }
-    
-    public function explodeUrl()
-    {
-        return $urlItems = explode('/', $_SERVER['REQUEST_URI']);
     }
 }

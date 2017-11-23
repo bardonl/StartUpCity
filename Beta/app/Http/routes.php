@@ -25,9 +25,9 @@ Route::get('/login', function () {
 
 Route::post('/profile', 'SessionController@create');
 
-Route::post('/register', 'RegistrationController@store');
-
 Route::group(['middleware' => 'auth'], function () {
+    
+    Route::post('/register', 'RegistrationController@store');
     
     Route::get('/profile', function() {
         
@@ -53,10 +53,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/leaning/start-assignment/{}', 'AssignmentController@put');
     
     Route::get('glogin', array('as'=>'glogin', 'uses'=>'UserController@googleLogin'));
-    
-    Route::get('/learning/start-assignment/{id}', 'UserAssignmentsController@create');
-    
-    Route::get('/working', 'AssignmentsController@show');
 });
 
 

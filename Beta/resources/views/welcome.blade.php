@@ -1,3 +1,4 @@
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -178,9 +179,9 @@
 <div class="overlay overlay_signup">
     <img src="{{ asset('css/gfx/close.png') }}" class="close_popup"/>
     <h3>Aanmelden</h3>
-    <a onClick="logInWithFacebook(); return false;" class="button button_facebook"><img
+    <a href="/facebook" class="button button_facebook"><img
                 src="{{ asset('css/gfx/facebook_icon.png') }}">Aanmelden met Facebook</a>
-    <a href="redirect/google" class="button button_google"><img src="{{ asset('css/gfx/google_icon.png') }}">Aanmelden met
+    <a href="/google" class="button button_google"><img src="{{ asset('css/gfx/google_icon.png') }}">Aanmelden met
         Google</a>
     <div class="of">
         <span>of</span>
@@ -199,9 +200,9 @@
 <div class="overlay overlay_signin">
     <img src="{{ asset('css/gfx/close.png') }}" class="close_popup"/>
     <h3>Inloggen</h3>
-    <a onClick="logInWithFacebook(); return false;" class="button button_facebook"><img
+    <a href="/facebook" class="button button_facebook"><img
                 src="{{ asset('css/gfx/facebook_icon.png') }}">Inloggen met Facebook</a>
-    <a href="redirect/google" class="button button_google"><img src="{{ asset('css/gfx/google_icon.png') }}">Inloggen met
+    <a href="/google" class="button button_google"><img src="{{ asset('css/gfx/google_icon.png') }}">Inloggen met
         Google</a>
     <div class="of">
         <span>of</span>

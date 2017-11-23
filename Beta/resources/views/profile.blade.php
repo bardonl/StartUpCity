@@ -5,6 +5,8 @@
 @section('content')
 
     <?php
+
+
         $checkUrl = new \App\Jobs\CheckUrlJob;
         $user = $checkUrl->checkProfileUrl();
         $userSkills = \App\Http\Controllers\UserController::getExperience($user->id);

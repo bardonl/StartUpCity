@@ -62,7 +62,6 @@ class UserController extends Controller
         $userdata = auth()->user();
         $userdata->last_active = $nowAmsterdam;
         $userdata->updated_at = $nowAmsterdam;
-        $userdata->online_status = 1;
         
         if ($userdata->save()) {
             
@@ -70,6 +69,19 @@ class UserController extends Controller
         }
         
         return false;
+    }
+    
+    public static function checkLastActive($user)
+    {
+        $now = strtotime(Carbon::now('Europe/Amsterdam'));
+        
+        if (($now - strtotime($user->last_active)) < 60) {
+            
+            return 'online';
+        } else {
+            
+            return 'offline';
+        }
     }
     
     public function show($id)

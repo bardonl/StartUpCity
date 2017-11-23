@@ -37,12 +37,11 @@ $(function () {
             var hours_converted = addLeadingZeros(Math.floor(hours), 2);
             var assignment_time_formatted = hours_converted + " : " + minutes_converted + " : " + seconds_converted;
             $("#mo-timer__time").html(assignment_time_formatted);
-            $("#mo-timer__status").html(assignment_status);
+
         }
 
         if (seconds <= 0) {
             $('#mo-timer__time').html('');
-            $('#mo-timer__status').html(assignment_status);
 
             $('#mo-money__amount').html(parseInt($('#mo-money__amount').html()) + peanuts);
 
@@ -50,5 +49,7 @@ $(function () {
 
             clearInterval(assignment_interval);
         }
+
+        $("#mo-timer__status").html(assignment_status);
     }, 500);
 });
