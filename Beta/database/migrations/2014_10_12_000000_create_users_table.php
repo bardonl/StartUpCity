@@ -26,7 +26,6 @@ class CreateUsersTable extends Migration
             $table->string('status')->nullable();
             $table->string('picture')->nullable();
     
-            $table->boolean('online_status')->default(0);
             $table->timestamp('last_active')->nullable();
             $table->timestamps();
         });

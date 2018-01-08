@@ -196,6 +196,6 @@
         </div>
     </div>
 </main>
-@include('dependencies.bottomJs')
+
 </body>
 </html>

@@ -5,10 +5,7 @@
 @section('content')
 
     <?php
-
-
-        $checkUrl = new \App\Jobs\CheckUrlJob;
-        $user = $checkUrl->checkProfileUrl();
+        $user = \App\Jobs\CheckUrlJob::checkUrl();
         $userSkills = \App\Http\Controllers\UserController::getExperience($user->id);
         $friendsCount = \App\Jobs\FriendsCounterJob::handle($user);
         $friends = \App\Http\Controllers\FriendsController::getFriends($user->id);
@@ -19,7 +16,7 @@
         <div class="co-panel">
             <div class="co-panel__heading--sub">Status</div>
             <div class="co-panel__content--top">
-                <span class="mo-timer__status--big">?<!--Werken--></span>
+                <span class="mo-timer__status--big"><!--Werken--></span>
                 <!--<span class="mo-timer__time">01 : 04 : 24</span>-->
             </div>
         </div>
@@ -57,13 +54,7 @@
                          onerror="this.onerror=null;this.src='{{ asset('css/gfx/no_profile.png') }}'" alt="">
                     <span class="mo-profile__username--big">@if(isset($user->username)){{$user->username}}@endif</span>
                     <span class="mo-profile__businessname--card">@if(isset($user->company_name)){{$user->company_name}}@endif</span>
-                    <p>
-                        @if ($user->online_status === 1)
-                            Online
-                        @else
-                            Offline
-                        @endif
-                    </p>
+                    <p>{{$user->user_online_status}}</p>
                 </div>
                 <div class="col-xs-12">
                     <div class="mo-skill">
