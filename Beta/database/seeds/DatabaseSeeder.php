@@ -104,11 +104,63 @@ class DatabaseSeeder extends Seeder
                 'peanuts' => 10,
                 'experience_points' => 5,
                 'image' => '.png'
+            ],
+    
+            [
+                'assignment_type_id' => 2,
+                'skill_id' => 1,
+                'entry_level_id' => 1,
+                'title' => 'Reclame maken',
+                'duration' => 7200,
+                'peanuts' => -200,
+                'experience_points' => 15,
+                'image' => '.png'
+            ],
+            [
+                'assignment_type_id' => 2,
+                'skill_id' => 2,
+                'entry_level_id' => 1,
+                'title' => 'Boekhouding bijwerken.',
+                'duration' => 18000,
+                'peanuts' => 0,
+                'experience_points' => 20,
+                'image' => '.png'
+            ],
+            [
+                'assignment_type_id' => 2,
+                'skill_id' => 3,
+                'entry_level_id' => 1,
+                'title' => 'Computer cursus volgen.',
+                'duration' => 14400,
+                'peanuts' => 8585,
+                'experience_points' => 8566,
+                'image' => '.png'
+            ],
+            [
+                'assignment_type_id' => 2,
+                'skill_id' => 4,
+                'entry_level_id' => 1,
+                'title' => 'Logo maken.',
+                'duration' => 3600,
+                'peanuts' => 454545,
+                'experience_points' => 54454,
+                'image' => '.png'
+            ]
+            ,
+            [
+                'assignment_type_id' => 2,
+                'skill_id' => 4,
+                'entry_level_id' => 1,
+                'title' => 'Testen.',
+                'duration' => 5,
+                'peanuts' => 10,
+                'experience_points' => 5,
+                'image' => '.png'
             ]
         ];
         
         //Create fake users and assign user_stats to them
-        factory(User::class, 10)->create()->each(function($u) {
+        factory(User::class, 100)->create()->each(function($u) {
             DB::table('user_stats')->insert([
                 'user_id' => $u->id,
                 'created_at' => Carbon::now('Europe/Amsterdam')

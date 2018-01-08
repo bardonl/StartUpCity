@@ -12,7 +12,6 @@ class FriendsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        auth()->user()->friends = \App\Http\Controllers\FriendsController::getFriends();
     }
     
     /**
@@ -167,7 +166,7 @@ class FriendsController extends Controller
      * @param $user_id
      * @return mixed
      */
-    public static function getFriends($user_id)
+    public static function getFriends($user_id, $next)
     {
         
         return DB::table('friends')->
@@ -188,6 +187,6 @@ class FriendsController extends Controller
                 where('accepted', '=', 1)->
                 where('users.id', '!=', $user_id);
             });
-        })->get();
+        })->skip($next)->limit(8)->get();
     }
 }

@@ -32,7 +32,7 @@ class SessionController extends Controller
     
             Session::set('friends', \App\Http\Controllers\FriendsController::getFriends(auth()->user()->id));
             
-            return view('/profile');
+            return redirect()->intended('/profile');
         } else {
             
             return redirect()->intended('/')->with('error', 'Gebruikersnaam of wachtwoord is niet correct!');
@@ -44,8 +44,12 @@ class SessionController extends Controller
      */
     public function destroy()
     {
+        auth()->user()->online_status = 0;
+        auth()->user()->save();
+        
         auth()->logout();
         
         return redirect()->intended('/')->with('success', 'Je bent uitgelogd!');
     }
+    
 }

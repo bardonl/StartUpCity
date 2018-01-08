@@ -1,3 +1,8 @@
-<?php namespace Laravel\Socialite\Two;
+<?php
 
-class InvalidStateException extends \InvalidArgumentException {}
+namespace Laravel\Socialite\Two;
+
+class InvalidStateException extends \InvalidArgumentException
+{
+    //
+}

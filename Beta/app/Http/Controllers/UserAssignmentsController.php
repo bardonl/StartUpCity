@@ -7,11 +7,13 @@ use App\UserStats;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\UserSkills;
+use App\Http\Controllers\TransactionsController;
 
 class UserAssignmentsController extends Controller
 {
-    public function create($id)
+    public function create($workingStatus, $id)
     {
+        
         $userAssignments = new UserAssignments();
     
         $userAssignments->user_id = auth()->user()->id;
@@ -24,7 +26,7 @@ class UserAssignmentsController extends Controller
         $userAssignments->save();
         
         return redirect()->action(
-            'AssignmentsController@show'
+            'AssignmentsController@show', ['working_status' => $workingStatus]
         );
     }
     
@@ -43,27 +45,34 @@ class UserAssignmentsController extends Controller
         }
     }
     
-    public static function updateUserAssignment($asssignmentData)
+    public static function updateUserAssignment()
     {
+        $assignmentData = self::getActiveAssignment();
+    
         
-        if (! empty($asssignmentData[0]))
+        if (! empty($assignmentData[0]))
         {
             
-            if ($asssignmentData[0]->start_time + $asssignmentData[0]->duration <= Carbon::now('Europe/Amsterdam')->timestamp)
+            if ($assignmentData[0]->start_time + $assignmentData[0]->duration <= Carbon::now('Europe/Amsterdam')->timestamp)
             {
+                $assignmentTypeTitle = DB::table('assignment_types')
+                    ->where('id', '=' , $assignmentData[0]->assignment_type_id)
+                    ->get();
+                
                 $userAssignmentData = UserAssignments::where([['user_id', '=', auth()->user()->id], ['active', '=', 1]])->first();
                 $userAssignmentData->active = 0;
                 $userAssignmentData->save();
 
                 $userStatsData = UserStats::where('user_id', '=', auth()->user()->id)->first();
-                $userStatsData->peanuts += $asssignmentData[0]->peanuts;
+                TransactionsController::saveTransaction('peanuts', NULL, auth()->user()->id, $assignmentData[0]->peanuts, $assignmentTypeTitle[0]->title . ':' . $assignmentData[0]->title);
+                $userStatsData->peanuts += $assignmentData[0]->peanuts;
                 $userStatsData->save();
                 
-                $userSkill = UserSkills::where([['skill_id', '=', $asssignmentData[0]->skill_id],['user_id', '=', auth()->user()->id]])->first();
-                $userSkill->experience += $asssignmentData[0]->experience_points;
+                $userSkill = UserSkills::where([['skill_id', '=', $assignmentData[0]->skill_id],['user_id', '=', auth()->user()->id]])->first();
+                TransactionsController::saveTransaction('experience', null, auth()->user()->id, $assignmentData[0]->experience_points, $assignmentTypeTitle[0]->title . ':' . $assignmentData[0]->title);
+                $userSkill->experience += $assignmentData[0]->experience_points;
                 $userSkill->save();
             }
         }
     }
-
 }

@@ -5,10 +5,13 @@
 @section('content')
 
     <?php
-        $user = \App\Jobs\CheckUrlJob::checkUrl();
+
+
+        $checkUrl = new \App\Jobs\CheckUrlJob;
+        $user = $checkUrl->checkProfileUrl();
         $userSkills = \App\Http\Controllers\UserController::getExperience($user->id);
         $friendsCount = \App\Jobs\FriendsCounterJob::handle($user);
-        $friends = \App\Http\Controllers\FriendsController::getFriends($user->id);
+        $friends = \App\Http\Controllers\FriendsController::getFriends($user->id, 8);
 
     ?>
 
@@ -16,7 +19,7 @@
         <div class="co-panel">
             <div class="co-panel__heading--sub">Status</div>
             <div class="co-panel__content--top">
-                <span class="mo-timer__status--big"><!--Werken--></span>
+                <span class="mo-timer__status--big">?<!--Werken--></span>
                 <!--<span class="mo-timer__time">01 : 04 : 24</span>-->
             </div>
         </div>
@@ -50,11 +53,17 @@
             <div class="co-panel">
                 <img class="co-panel__image--top img-responsive" src="http://placehold.it/890x340" alt="">
                 <div class="mo-profile__accountinfo--card">
-                    <img class="mo-profile__image--card" width="140" height="140" src=""
+                    <img class="mo-profile__image--card" id="{{$user->id}}" width="140" height="140" src="{{$user->picture}}@if(strpos($user->picture, 'facebook')){{'?width=1920'}}@endif"
                          onerror="this.onerror=null;this.src='{{ asset('css/gfx/no_profile.png') }}'" alt="">
                     <span class="mo-profile__username--big">@if(isset($user->username)){{$user->username}}@endif</span>
                     <span class="mo-profile__businessname--card">@if(isset($user->company_name)){{$user->company_name}}@endif</span>
-                    <p>{{$user->user_online_status}}</p>
+                    <p>
+                        @if ($user->online_status === 1)
+                            Online
+                        @else
+                            Offline
+                        @endif
+                    </p>
                 </div>
                 <div class="col-xs-12">
                     <div class="mo-skill">
@@ -133,29 +142,37 @@
                                 </p>
                             </div>
                         </div>
-                    @elseif ($friends)
-                        @foreach($friends as $friend)
-                            <div class="row">
-                                <a href="/profile/{{$friend->id}} "
-                                   class="mo-friendslist col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                                    <div class="mo-friendslist__status mo-friendslist__status--offline">
-                                        <img src="{{ asset('css/gfx/no_profile.png') }}" alt="" class="mo-profile__image--friendslist" onerror="this.onerror=null;this.src='{{ asset('css/gfx/no_profile.png') }}'">
-                                    </div>
-                                    <span class="mo-profile__username--friendslist">{{$friend->username}}</span>
-                                </a>
-                            </div>
-                        @endforeach
-                    @endif
+                            @elseif ($friends)
+                                <?php
+                                    $i = 0;
+                                    $q = 1;
+                                ?>
+                                <div class="row" id="{{$q}}">
 
-                <!-- <div class="row">
+                                    @foreach($friends as $friend)
+                                        <a href="/profile/{{$friend->id}}" style="width: 50%"
+                                           class="mo-friendslist col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                            <div class="mo-friendslist__status mo-friendslist__status--offline">
+                                                <img src="{{ asset('css/gfx/no_profile.png') }}" alt="" class="mo-profile__image--friendslist" onerror="this.onerror=null;this.src='{{ asset('css/gfx/no_profile.png') }}'">
+                                            </div>
+                                            <span class="mo-profile__username--friendslist">{{$friend->username}}</span>
+                                        </a>
+                                        <?php
+                                            $i++;
+                                        ?>
+                                        @if($i === 8)
+                                        <?php $q++; $i = 0 ?>
+                                            </div>
+                                            <div class="row" id="{{$q}}">
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
+
+                <div class="row-navigation" style="display: block">
                   <ul class="co-pagination">
-                    <li><a href="#" class="co-pagination__item co-pagination__item--active">1</a></li>
-                    <li><a href="#" class="co-pagination__item">2</a></li>
-                    <li><a href="#" class="co-pagination__item">3</a></li>
-                    <li><a href="#" class="co-pagination__item">4</a></li>
-                    <li><a href="#" class="co-pagination__item">5</a></li>
                   </ul>
-                </div> -->
+                </div>
                 </div>
             </div>
         </div>

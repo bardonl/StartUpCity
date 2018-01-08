@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use Validator;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+
 
 class AuthController extends Controller
 {
@@ -37,7 +38,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+//        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
     /**
@@ -50,8 +51,7 @@ class AuthController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'email' => 'required|email|max:255|unique:users'
         ]);
     }
 
@@ -63,10 +63,43 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user =  User::create([
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => bcrypt($data['password'])
         ]);
+        
+        return $user;
+    }
+    
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+    
+    public function handleProviderCallback($provider)
+    {
+        try {
+            
+            $user = Socialite::driver($provider)->stateless()->user();
+            
+            $create['email'] = $user->email;
+            $create[$provider . '_id'] = $user->id;
+            $create['provider'] = $provider;
+            $create['online_status'] = 1;
+            $urlComponents = explode('?',$user->avatar_original);
+            $create['picture'] = $urlComponents[0];
+            
+            $userModel = new User;
+            
+            $createdUser = $userModel->addNew($create);
+            
+            $user = User::find($createdUser->id);
+            
+            auth()->login($user);
+            
+            return view('/profile');
+        } catch (Exception $e) {
+            return redirect('welcome')->with('error', 'Whoops! Er is iets mis gegaan!');
+        }
     }
 }
